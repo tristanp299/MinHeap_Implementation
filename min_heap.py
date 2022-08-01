@@ -54,16 +54,15 @@ class MinHeap:
 
 
     def is_empty(self) -> bool:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        if self._heap.is_empty():
+            return True
+        else:
+            return False
 
     def get_min(self) -> object:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        return self._heap[0]
 
     def remove_min(self) -> object:
         """
@@ -128,7 +127,7 @@ if __name__ == '__main__':
     for value in ['monkey', 'zebra', 'elephant', 'horse', 'bear']:
         h.add(value)
         print(h)
-else:
+
     print("\nPDF - is_empty example 1")
     print("-------------------")
     h = MinHeap([2, 4, 12, 56, 8, 34, 67])
