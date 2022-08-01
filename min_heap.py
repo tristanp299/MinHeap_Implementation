@@ -40,10 +40,18 @@ class MinHeap:
         return 'HEAP ' + str(heap_data)
 
     def add(self, node: object) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        self._heap.append(node)
+        i = self._heap.length()-1
+        p = (i-1)//2
+        while(i> 0 and self._heap[i]<self._heap[p]):
+            temp = self._heap[i]
+            self._heap[i] = self._heap[p]
+            self._heap[p] = temp
+            i = p
+            p = (i-1)//2
+
+
 
     def is_empty(self) -> bool:
         """
@@ -120,7 +128,7 @@ if __name__ == '__main__':
     for value in ['monkey', 'zebra', 'elephant', 'horse', 'bear']:
         h.add(value)
         print(h)
-
+else:
     print("\nPDF - is_empty example 1")
     print("-------------------")
     h = MinHeap([2, 4, 12, 56, 8, 34, 67])
