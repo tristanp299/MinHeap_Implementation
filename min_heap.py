@@ -86,7 +86,7 @@ class MinHeap:
             heap2.append(i)
         self._heap = heap2
 
-        i = (da.length()-1)//2 - 1
+        i = (da.length())//2 - 1
         while(i>=0):
             _percolate_down(self._heap, i)
             i -= 1
