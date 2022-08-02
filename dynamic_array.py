@@ -131,6 +131,14 @@ class DynamicArray:
         print(f"Length: {self._size}, Capacity: {self._capacity}, {self._data}")
 
     # -----------------------------------------------------------------------
+    def pop(self):
+
+        if self._size == 0:
+            raise DynamicArrayException
+        removed = self._data[self._size-1]
+        self._data[self._size - 1] = None
+        self._size-=1
+        return removed
 
     def resize(self, new_capacity: int) -> None:
         """resize functions takes in a new_capacity and allocates old StaticArray elements into a new array with a new capacity.

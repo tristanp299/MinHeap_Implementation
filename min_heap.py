@@ -62,19 +62,36 @@ class MinHeap:
 
     def get_min(self) -> object:
 
-        return self._heap[0]
+        if self._heap.is_empty():
+            raise MinHeapException
+        else:
+            return self._heap[0]
 
     def remove_min(self) -> object:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        if self._heap.is_empty():
+            raise MinHeapException
+
+        min = self._heap[0]
+        self._heap[0], self._heap[self._heap.length() - 1] = self._heap[self._heap.length() - 1], self._heap[0]
+        self._heap.pop()
+        _percolate_down(self._heap, 0)
+        return min
 
     def build_heap(self, da: DynamicArray) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        heap2 = DynamicArray()
+
+        for i in da:
+            heap2.append(i)
+        self._heap = heap2
+
+        i = (da.length()-1)//2 - 1
+        while(i>=0):
+            _percolate_down(self._heap, i)
+            i -= 1
+
+
 
     def size(self) -> int:
         """
@@ -100,11 +117,32 @@ def heapsort(da: DynamicArray) -> None:
 # function for percolating elements down the MinHeap. You can call           #
 # this from inside the MinHeap class. You may edit the function definition.  #
 
-def _percolate_down(da: DynamicArray, parent: int) -> None:
-    """
-    TODO: Write your implementation
-    """
-    pass
+def _percolate_down(da: DynamicArray, parent) -> None:
+    i = parent
+
+    while (True):
+        min = i
+        ch1 = 2 * i + 1
+        ch2 = 2 * i + 2
+        if (ch1 <= da.length() - 1 and da[i] > da[ch1]):
+            min = ch1
+
+        if ch2 <= da.length() - 1 and da[min] > da[ch2]:
+            min = ch2
+
+        if min == i:
+            break
+
+        da[i], da[min] = da[min], da[i]
+        i = min
+
+
+
+
+
+
+
+
 
 
 # ------------------- BASIC TESTING -----------------------------------------
@@ -168,7 +206,7 @@ if __name__ == '__main__':
     print(h)
     if h.get_min() == 500:
         print("Error: input array and heap's underlying DA reference same object in memory")
-
+else:
     print("\nPDF - heapsort example 1")
     print("------------------------")
     da = DynamicArray([100, 20, 6, 200, 90, 150, 300])
