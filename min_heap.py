@@ -75,7 +75,7 @@ class MinHeap:
         min = self._heap[0]
         self._heap[0], self._heap[self._heap.length() - 1] = self._heap[self._heap.length() - 1], self._heap[0]
         self._heap.pop()
-        _percolate_down(self._heap, 0)
+        _percolate_down(self._heap, 0, self._heap.length())
         return min
 
     def build_heap(self, da: DynamicArray) -> None:
@@ -88,46 +88,51 @@ class MinHeap:
 
         i = (da.length())//2 - 1
         while(i>=0):
-            _percolate_down(self._heap, i)
+            _percolate_down(self._heap, i, self._heap.length())
             i -= 1
 
 
 
     def size(self) -> int:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        return self._heap.length()
 
     def clear(self) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+
+        self._heap = DynamicArray()
 
 
 def heapsort(da: DynamicArray) -> None:
-    """
-    TODO: Write this implementation
-    """
-    pass
+
+
+    k = da.length()//2 - 1
+    i = 0
+    while (k>=0):
+        _percolate_down(da,k,da.length())
+        k-=1
+
+    k = da.length()-1
+    while(k>=0):
+        da[k], da[0] = da[0], da[k]
+        _percolate_down(da,0, k)
+        k-=1
 
 
 # It's highly recommended that you implement the following optional          #
 # function for percolating elements down the MinHeap. You can call           #
 # this from inside the MinHeap class. You may edit the function definition.  #
 
-def _percolate_down(da: DynamicArray, parent) -> None:
+def _percolate_down(da: DynamicArray, parent, size) -> None:
     i = parent
 
     while (True):
         min = i
         ch1 = 2 * i + 1
         ch2 = 2 * i + 2
-        if (ch1 <= da.length() - 1 and da[i] > da[ch1]):
+        if (ch1 <= size - 1 and da[i] > da[ch1]):
             min = ch1
 
-        if ch2 <= da.length() - 1 and da[min] > da[ch2]:
+        if ch2 <= size - 1 and da[min] > da[ch2]:
             min = ch2
 
         if min == i:
