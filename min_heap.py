@@ -206,7 +206,7 @@ if __name__ == '__main__':
     print(h)
     if h.get_min() == 500:
         print("Error: input array and heap's underlying DA reference same object in memory")
-else:
+
     print("\nPDF - heapsort example 1")
     print("------------------------")
     da = DynamicArray([100, 20, 6, 200, 90, 150, 300])
