@@ -1,9 +1,10 @@
-# Name:
-# OSU Email:
+# Name: Tristan Pereira
+# OSU Email: pereirtr@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: Assignment 5 - MinHeap Implementation
+# Due Date:08/01/2022
+# Description: min_heap.py implements a priority queue ADT by using a heap data structure built on a dynamic array.
+#multiple functions are created to manipulate the nodes inside the heap.
 
 
 from dynamic_array import *
@@ -40,10 +41,12 @@ class MinHeap:
         return 'HEAP ' + str(heap_data)
 
     def add(self, node: object) -> None:
+        '''Adds a node to the correct spot on the heap.'''
 
         self._heap.append(node)
         i = self._heap.length()-1
-        p = (i-1)//2
+        p = (i-1)//2 #parent node
+        #iterate from the end of the Heap and check for minimum value
         while(i> 0 and self._heap[i]<self._heap[p]):
             temp = self._heap[i]
             self._heap[i] = self._heap[p]
@@ -51,9 +54,8 @@ class MinHeap:
             i = p
             p = (i-1)//2
 
-
-
     def is_empty(self) -> bool:
+        '''is_empty returns True if the Heap is empty and False otherwise.'''
 
         if self._heap.is_empty():
             return True
@@ -61,6 +63,7 @@ class MinHeap:
             return False
 
     def get_min(self) -> object:
+        '''get_min returns the node with the minimum value, if the heap is empty it raises an Exception.'''
 
         if self._heap.is_empty():
             raise MinHeapException
@@ -68,17 +71,21 @@ class MinHeap:
             return self._heap[0]
 
     def remove_min(self) -> object:
+        '''remove_min function removes the minimum value in the Heap and returns that node. If the heap is empty it raises an exception.'''
 
         if self._heap.is_empty():
             raise MinHeapException
 
         min = self._heap[0]
+        #switch first and last
         self._heap[0], self._heap[self._heap.length() - 1] = self._heap[self._heap.length() - 1], self._heap[0]
-        self._heap.pop()
-        _percolate_down(self._heap, 0, self._heap.length())
+        self._heap.pop() # remove last
+
+        _percolate_down(self._heap, 0, self._heap.length()) #Then percolate down once.
         return min
 
     def build_heap(self, da: DynamicArray) -> None:
+        '''build_heap function takes in a dynamic array and builds a heap from the unordered elements. '''
 
         heap2 = DynamicArray()
 
@@ -86,27 +93,27 @@ class MinHeap:
             heap2.append(i)
         self._heap = heap2
 
-        i = (da.length())//2 - 1
+        i = (da.length())//2 - 1 #Last subtree
         while(i>=0):
-            _percolate_down(self._heap, i, self._heap.length())
+            _percolate_down(self._heap, i, self._heap.length()) #percolate every index
             i -= 1
 
-
-
     def size(self) -> int:
+        '''size function returns the length of the Heap.'''
 
         return self._heap.length()
 
     def clear(self) -> None:
-
+        '''clear function emptys the Heap.'''
         self._heap = DynamicArray()
 
 
 def heapsort(da: DynamicArray) -> None:
-
+    '''heapsort function takes in a dynamic array as a parameter,
+    creates a new heap, and then continuously sorts it by percolating down. '''
 
     k = da.length()//2 - 1
-    i = 0
+
     while (k>=0):
         _percolate_down(da,k,da.length())
         k-=1
@@ -117,12 +124,10 @@ def heapsort(da: DynamicArray) -> None:
         _percolate_down(da,0, k)
         k-=1
 
+def _percolate_down(da: DynamicArray, parent: int, size: int) -> None:
+    '''_percolate_down function iterates through the heap by comparing values of the current node to its children, then contiously switching until its at the correct place
+    in the Heap.'''
 
-# It's highly recommended that you implement the following optional          #
-# function for percolating elements down the MinHeap. You can call           #
-# this from inside the MinHeap class. You may edit the function definition.  #
-
-def _percolate_down(da: DynamicArray, parent, size) -> None:
     i = parent
 
     while (True):
@@ -135,7 +140,7 @@ def _percolate_down(da: DynamicArray, parent, size) -> None:
         if ch2 <= size - 1 and da[min] > da[ch2]:
             min = ch2
 
-        if min == i:
+        if min == i: #no comparison to be made/correct spot
             break
 
         da[i], da[min] = da[min], da[i]
